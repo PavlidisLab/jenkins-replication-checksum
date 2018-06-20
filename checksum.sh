@@ -14,16 +14,16 @@
 #
 # DB_HOST           Which host is this database located
 #
-# TABLE_CUTOFF_SIZE Maximum size of table to be included in checksum (not counting indices), 0 to turn off
+# TABLE_SIZE_CUTOFF Maximum size of table to be included in checksum (not counting indices), 0 to turn off
 
 : ${DB?Please specify a database.}
 : ${DB_HOST?Please specify a database host.}
 : ${DB_USER?Please specify database user.}
 : ${DB_PASS?Please specify a database password.}
 
-if [ -z "$TABLE_CUTOFF_SIZE" ]; then 
-    TABLE_CUTOFF_SIZE="0"
-    echo "TABLE_CUTOFF_SIZE defaulted to '$TABLE_CUTOFF_SIZE'"
+if [ -z "$TABLE_SIZE_CUTOFF" ]; then 
+    TABLE_SIZE_CUTOFF="0"
+    echo "TABLE_SIZE_CUTOFF defaulted to '$TABLE_SIZE_CUTOFF'"
 fi
 
 echo [ `date` ] starting checksum of $DB on $DB_HOST
