@@ -53,11 +53,11 @@ echo "Checking for data drift on Master-Slave replication..."
 TABLES_SQL="SELECT table_name, round((data_length / 1024 / 1024), 2) as size, data_length > $TABLE_SIZE_CUTOFF AND $TABLE_SIZE_CUTOFF > 0 as skip FROM information_schema.TABLES  WHERE table_schema = '$DB' order by data_length ASC"
 
 STATUS=0
-mysql -h$DB_HOST -u$DB_USER -p$DB_PASS -Bs $DB -e "$TABLES_SQL"  | while read table_name size skip; do
+while read table_name size skip; do
     [[ $skip == 1 ]] && echo "Skip: $table_name ; size: ${size}MB" && continue
     echo "Checking: $table_name"
     check_table $table_name
     [[ $? -ne 0 ]] && STATUS=1
-done
+done < <(mysql -h$DB_HOST -u$DB_USER -p$DB_PASS -Bs $DB -e "$TABLES_SQL")
 
 exit $STATUS
