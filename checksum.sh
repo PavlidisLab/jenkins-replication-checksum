@@ -29,7 +29,7 @@ fi
 echo [ `date` ] starting checksum of $DB on $DB_HOST
 
 function check_table {
-    pt-table-checksum h=$DB_HOST,u=$DB_USER,p=$DB_PASS --databases=$DB --tables=$1
+    pt-table-checksum h=$DB_HOST,u=$DB_USER,p=$DB_PASS --chunk-size-limit=3 --databases=$DB --tables=$1
     local status=$?
     if [ $status -ne 0 ]; then
         if [ $status -ne 255 ]; then
